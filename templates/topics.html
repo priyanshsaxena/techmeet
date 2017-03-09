@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+	<title>Topics</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css' />
+	<script type="text/javascript" src = "{{ url_for('static', filename = 'js/script.js') }}"></script>
+</head>
+<body>
+    <header class="header">
+		<div class="header-limiter">
+			<h1><a href="{{ url_for('index') }}">Tech<span>Meet</span></a></h1>
+			<nav>
+				<a href="{{ url_for('index') }}">Home</a>
+				<a href="{{ url_for('articles') }}">Articles</a>
+				<a href="{{ url_for('topics') }}" class="selected">Topics</a>
+			</nav>
+		</div>
+	</header>
+   
+      <h1>Topics</h1>
+      <a href="http://www.google.com">Topic 1</a>
+      <a href="http://www.fb.com">Topic 2</a>
+      
+</body>
+</html>

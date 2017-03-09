@@ -1,0 +1,295 @@
+@import url(http://fonts.googleapis.com/css?family=Sniglet|Raleway:900);
+
+li a {
+    color: green;
+}
+
+.header{
+	background-color:#292c2f;
+	box-shadow:0 1px 1px #ccc;
+	padding: 20px 40px;
+	height: 80px;
+	color: #ffffff;
+	box-sizing: border-box;
+}
+
+.header .header-limiter {
+	max-width: 1200px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+/* Logo */
+
+.header .header-limiter h1{
+	float: left;
+	font: normal 28px Cookie, Arial, Helvetica, sans-serif;
+	line-height: 40px;
+	margin: 0;
+}
+
+.header .header-limiter h1 span {
+	color: #5383d3;
+}
+
+/* The navigation links */
+
+.header .header-limiter a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.header .header-limiter nav {
+	font:16px Arial, Helvetica, sans-serif;
+	line-height: 40px;
+	float: left;
+	margin: 0 0 0 60px;
+	padding: 0;
+}
+
+.header .header-limiter nav a{
+	font-size: 14px;
+	display: inline-block;
+	padding: 0 5px;
+	opacity: 0.9;
+	text-decoration:none;
+	line-height: 1;
+}
+
+.header .header-limiter nav a:hover {
+	opacity: 1;
+}
+
+.header .header-limiter nav a.selected {
+	color: #608bd2;
+}
+
+/* Login/Sign up buttons */
+
+/*.header .header-limiter ul {
+	font: 14px Arial, Helvetica, sans-serif;
+	list-style: none;
+	line-height: 1;
+	float: right;
+}
+
+.header .header-limiter ul li {
+	display: inline-block;
+	margin-left: 15px;
+	opacity:0.9;
+}
+
+.header .header-limiter ul li:hover{
+	opacity: 1;
+}*/
+
+.header .header-limiter ul {
+	font: 14px Arial, Helvetica, sans-serif;
+	list-style: none;
+	line-height: 1;
+	float: right;
+}
+
+.header .header-limiter ul li{
+	display: inline-block;
+	margin-left: 15px;
+	opacity:0.9;
+}
+
+.header .header-limiter ul li:hover{
+	opacity: 1;
+}
+
+/* The sign up button */
+
+.header .header-limiter ul li:last-child a {
+	font-weight: bold;
+	background-color: #3a3c3e;
+	padding: 10px 15px;
+	border-radius: 3px;
+}
+
+/* Making the header responsive */
+
+@media all and (max-width: 600px) {
+
+	.header {
+		padding: 25px;
+		height: 85px;
+	}
+
+	.header .header-limiter h1 {
+		float: none;
+		margin: -8px 0 2px;
+		text-align: center;
+		font-size: 24px;
+		line-height: 1;
+	}
+
+	.header .header-limiter nav {
+		margin: 0;
+		float: none;
+	}
+
+	.header .header-limiter nav li a {
+		font-size: 13px;
+	}
+
+	.header .header-limiter ul {
+		display: none;
+	}
+
+}
+
+/* For the headers to look good, be sure to reset the margin and padding of the body */
+
+body {
+	margin:0;
+	padding:0;
+}
+
+.content {
+	min-height: 800px;
+	margin-top: 5%;
+}
+
+#lightbox {
+	position:fixed;
+	top:0; 
+	left:0; 
+	width:100%; 
+	height:100%; 
+	background: rgba(0,0,0,.4);
+	text-align:center;
+	display: none;
+}
+
+#loginform {
+	width:50%;
+	opacity: 0.95;
+	z-index: 1;
+	min-height: 60%;
+	margin:0 auto;
+	margin-top: 3%;
+	background-color: #98d4f3; 
+	color: white;
+	font-family: 'Sniglet', cursive;
+	text-align:left; 
+	border:1px solid #ccc;
+	border-top:none; 
+	padding:25px; 
+	border-radius:0 0 5px 5px;
+	-moz-border-radius:0 0 5px 5px;
+	-webkit-border-radius: 20px 20px 20px 20px; 
+	box-shadow:0 0 5px #ccc;
+	-moz-box-shadow:0 0 5px #ccc;
+	-webkit-box-shadow:0 0 5px #ccc;
+}
+
+label, input, textarea{
+	display: block;	
+}
+input, textarea{
+	width: 75%;	
+	border: none;
+	border-radius: 20px;
+	outline: none;
+	padding: 10px;
+	font-family: 'Sniglet', cursive;
+	font-size: 1em;
+	color: #676767;
+	transition: border 0.5s;
+	-webkit-transition: border 0.5s;
+	-moz-transition: border 0.5s;
+	-o-transition: border 0.5s;
+	border: solid 3px #98d4f3;	
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	
+}
+input:focus, textarea:focus{
+	border: solid 3px #77bde0;	
+}
+
+textarea{
+	height: 100px;	
+	resize: none; 
+	overflow: auto;
+}
+input[type="submit"]{
+	background-color: #F90;
+	color: white;
+	height: 50px;
+	width: 63%;
+	cursor: pointer;
+	margin-top: 30px;
+	font-size: 1.29em;
+	font-family: 'Sniglet', cursive;
+	-webkit-transition: background-color 0.5s;
+	-moz-transition: background-color 0.5s;
+	-o-transition: background-color 0.5s;
+	transition: background-color 0.5s;
+}
+input[type="submit"]:hover{
+	background-color: #e58f0e;
+	
+}
+label{
+	font-size: 1.5em;
+	margin-top: 20px;
+	padding-left: 20px;
+}
+.formgroup, .formgroup-active, .formgroup-error{
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	background-size: 10.5%;
+	transition: background-image 0.7s;
+	-webkit-transition: background-image 0.7s;
+	-moz-transition: background-image 0.7s;
+	-o-transition: background-image 0.7s;
+	width: 566px;
+	padding-top: 2px;
+}
+
+.formgroup{
+	background-image: url('http://www.geertjanhendriks.nl/codepen/form/pixel.gif');	
+}
+.formgroup-active{
+	background-image: url('http://www.geertjanhendriks.nl/codepen/form/octo.png');
+}
+.formgroup-error{
+	background-image: url('http://www.geertjanhendriks.nl/codepen/form/octo-error.png');
+	color: red;
+}
+
+/* Animation webkit */
+@-webkit-keyframes myfirst
+{
+	0% {margin-left: -20px}
+	90% {margin-left: 100%;}
+	100% {margin-left: 100%;}
+}
+
+/* Animation */
+@keyframes myfirst
+{
+	0% {margin-left: -20px}
+	70% {margin-left: 100%;}
+	100% {margin-left: 100%;}
+}
+
+.fish{
+	background-image: url('http://www.geertjanhendriks.nl/codepen/form/fish.png');
+	width: 235px;
+	height: 104px;
+	margin-left: -235px;
+	top: 200px;
+	position: absolute;	
+	animation: myfirst 12s;
+	-webkit-animation: myfirst 12s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-animation-timing-function: linear;
+}
