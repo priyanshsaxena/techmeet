@@ -5,6 +5,17 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css' />
 	<script type="text/javascript" src = "{{ url_for('static', filename = 'js/script.js') }}"></script>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script>
+		var some = [];
+	</script>
+	{% for row in result %}
+		<script type="text/javascript">
+			var quote = '{{ row[3] }}';
+			some.push(quote);
+		</script>
+	{% endfor %}
+	<script type="text/javascript">alert(some[0]);</script>
 </head>
 <body>
     <header class="header">
@@ -14,13 +25,18 @@
 				<a href="{{ url_for('index') }}">Home</a>
 				<a href="{{ url_for('articles') }}" class="selected">Articles</a>
 				<a href="{{ url_for('topics') }}">Topics</a>
+				<a href="{{ url_for('visuals') }}">Visuals</a>
 			</nav>
 		</div>
 	</header>
-   
+
       <h1>Articles</h1>
-      <a href="http://www.google.com">Article 1</a>
-      <a href="http://www.fb.com">Article 2</a>
+      {% for i in range(10) %}
+      <p>
+      <a href="http://www.google.com">{{result[i][0]}}</a><br/>
+      Sentiment Value: {{result[i][3]}}</p>
+      {% endfor %}
+      <!-- <a href="http://www.fb.com">Article 2</a> -->
       
 </body>
 </html>

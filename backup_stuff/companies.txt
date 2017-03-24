@@ -1,0 +1,74 @@
+apple
+aapl
+american express
+axp
+boeing
+ba
+caterpillar
+cat
+cisco systems
+csco
+chevron
+cvx
+coca-cola
+coca cola
+coca - cola
+cocacola
+ko
+dupont
+dd
+exxonmobil
+xom
+general electric
+ge
+goldman sachs
+goldmansachs
+goldmansach
+gs
+home depot
+hd
+ibm
+ibm
+intel
+intc
+johnson&johnson
+johnson & johnson
+jnj
+jpmorgan chase
+jp morgan chase
+jpmorganchase
+jpm
+mcdonald's
+mcd
+3m
+mmm
+merck
+mrk
+microsoft
+msft
+nike
+nke
+pfizer
+pfe
+procter&gamble
+procter & gamble
+procter and gamble
+pg
+the travelers
+trv
+unitedhealth
+unh
+united technologies
+utx
+visa
+v
+verizon
+vz
+wal-mart
+walmart
+wal mart
+wmt
+walt disney
+dis
+mcdonalds
+mcdonald's

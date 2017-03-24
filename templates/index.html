@@ -1,28 +1,326 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>Index</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css' />
-	<script type="text/javascript" src = "{{ url_for('static', filename='js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script type="text/javascript">
+    var company = "";
+    $(document).ready(function() {
+        console.log({{ results[7]}});
+        var chart = new CanvasJS.Chart("chartContainer", {
+            title: {
+                text: "Top Gainers and Losers",
+                fontWeight: "normal",
+                padding: 20
+            },
+            dataPointMaxWidth: 30,
+            animationEnabled: true,
+            zoomEnabled:true,
+            axisY: {
+                suffix: "%",
+                title: "Gain/Loss",
+                titleFontSize: 25,
+                gridThickness: 0,
+                margin: 10,
+                labelFontSize: 15,
+                valueFormatString:  "#0.##0",
+                stripLines: [
+                    {
+                        startValue: 0.0001,
+                        endValue: 0.0000,
+                        color: 'black'
+                    }
+                ]
+            },
+            axisX: {
+                margin: 10,
+            },
+            data: [{
+                click: function(e) {
+                    console.log("Stock:" + e.dataPoint.label + ", Gain/Loss: " + e.dataPoint.y + '%');
+                    if(e.dataPoint.label=="{{ results[0] }}")
+                        clickSearch("{{ results[8] }}");
+                    else if(e.dataPoint.label=="{{ results[1] }}")
+                        clickSearch("{{ results[9] }}");
+                    else if(e.dataPoint.label=="{{ results[2] }}")
+                        clickSearch("{{ results[10] }}");
+                    else if(e.dataPoint.label=="{{ results[3] }}")
+                        clickSearch("{{ results[11] }}");
+                },
+                type: "column",
+                dataPoints: [{
+                    y: {{ results[6]}},
+                    label: "{{ results[2]}}",
+                    color: "#006400"
+                }, {
+                    y: {{ results[7]}},
+                    label: "{{ results[3]}}",
+                    color: "#006400"
+                }, {
+                    y: {{ results[5] }},
+                    label: "{{ results[1]}}",
+                    color: "#B22222"
+                }, {
+                    y: {{ results[4] }},
+                    label: "{{ results[0]}}",
+                    color: "#B22222"
+                }]
+            }]
+        });
+        chart.render();
+    });
+    function clickSearch(stock){
+      $("#searchbox").val(stock);
+      $("#submit").click();
+      var height = $('#myChart').offset().top; 
+      $("html, body").animate({ scrollTop: height }, 800);
+    };
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/canvasjs.min.js') }}"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="IIT Mandi">
+    <title>Stock Market Analysis</title>
+    <!-- start: CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auto-complete.css') }}">
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/scrolling-nav.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css' />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body>
-    <header class="header">
-		<div class="header-limiter">
-			<h1><a href="{{ url_for('index') }}">Tech<span>Meet</span></a></h1>
-			<nav>
-				<a href="{{ url_for('index') }}" class="selected">Home</a>
-				<a href="{{ url_for('articles') }}">Articles</a>
-				<a href="{{ url_for('topics') }}">Topics</a>
-			</nav>
-			<ul>
-				<li><a href="#" class="lightbox_trigger">Login</a></li>
-				<li><a href="#" class="lightbox_trigger">Sign up</a></li>
-			</ul>
-		</div>
-	</header>
-   
-      <h1>Index</h1>
-      
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top"  style="margin-left:15%;" id="logo">Tech<span>Meet</span></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#results">Results</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#search">Search</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- Intro Section -->
+    <section id="intro" class="intro-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 style="margin-top: 120px">5<sup>th</sup> Inter IIT Tech Meet</h1>
+                    <h4>IIT Mandi</h4>
+                    <p>All Stocks have been scraped. All results have been calculated. </p>
+                    <a class="btn btn-default" href="{{ url_for('static', filename='output.txt') }}" download>Download Text File</a>
+                    <a class="btn btn-default page-scroll" href="#results">See Results</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section id="results" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div style="margin-top:-12%" class="col-lg-12">
+                    <!-- <h1>Result Section</h1> -->
+                    <div style="height: 40px"></div>
+                    <div id="chartContainer" style="height: 500px; width: 70%; margin-left: 15%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- search section -->
+    <section id="search" class="services-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="margin-top: -9.5%">
+                    <h1>Search for Stocks</h1>
+                    <div style="height:auto;min-height:50px;">
+                        <div class="pure-form" style="border-top: 1px solid #eee;border-bottom:1px solid #eee;background:#fafafa;margin:30px 0;padding:20px 10px;text-align:center">
+                            <input id="searchbox" autofocus type="text" name="query" placeholder="Enter Company Name" style="margin: 0 auto; height:3em; width:100%;max-width:600px;outline:0">
+                            <br/>
+                            <input class="submitButton" id="submit" type="submit" name="search" onclick="makecall()" value="Search">
+                            <p id="loading" style="display: none;">Loading..</p>
+                        </div>
+                        <script type="text/javascript" src="{{ url_for('static', filename = 'js/auto-complete.js') }}"></script>
+                        <script type="text/javascript">
+                            var demo1 = new autoComplete({
+                            selector: '#searchbox',
+                            minChars: 1,
+                            source: function(term, suggest) {
+                                term = term.toLowerCase();
+                                var choices = ['Apple','American Express','Boeing','Caterpillar','Cisco','Chevron','Coca-Cola','Dupont','Exxon','General Electric','Goldman Sachs','Home Depot','IBM','Intel','Johnson & Johnson','JP Morgan','McDonalds','3M','Merck','Microsoft','Nike','Pfizer','Procter & Gamble','Travelers','United Health','United Technologies','Visa','Verizon','Walmart','Disney'];
+                                var suggestions = [];
+                                for (i = 0; i < choices.length; i++)
+                                    if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                                suggest(suggestions);
+                            }
+                        });
+                        </script>
+                    </div>
+                    <div id="container" style="height: 400px">
+                        <div id="graph" style="width: 65%;height: 100%;float: left;">
+                            <canvas id="myChart" style="height: 100%;width: 100%;"></canvas>
+                        </div>
+                        <div id="articledisplay" style="width: 33%;float:right;">
+                            <h3 id="articleHeading" style="display: none">Relevant Articles in order</h3>
+                            {% for i in range(8) %}
+                            <h5 id="article{{i+1}}" class="lightbox_trigger" style="display: none;">Heading {{i + 1}}</h5>
+                            <p id="textpart{{i+1}}" class="article-content"></p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+                    <div id="lightbox">
+                        <p class="close"><img src="{{ url_for('static',filename='images/close.png')}}" height="30px" width="30px" /></p>
+                        <div id="content">
+                            <p></p>
+                        </div>
+                    </div>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- Scrolling Nav JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/scrolling-nav.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/Chart.bundle.js') }}"></script>
+    <script type="text/javascript">
+    var some = [],times = [];
+    function close(){
+        $('.lightbox').hide(100);
+    };
+    var display = 0;
+    var arr = [], urls = [];
+
+    function makecall() {
+        var name = $('#searchbox').val().trim();
+        $('#loading').show();
+        $.ajax({
+            contentType: 'application/json',
+            url: '/process',
+            data: JSON.stringify(name),
+            dataType: 'json',
+            type: 'POST',
+            success: function(response) {
+                arr = [];
+                urls = [];
+                company = response.company;
+                retval = response.resultsArray;
+                listofarticles = response.articleslist;
+                var  disp = document.getElementsByClassName('lightbox_trigger');
+                for(var i=0;i<Math.min(listofarticles.length,8);i++) {
+                    document.getElementById('article'+(i+1).toString()).innerHTML = listofarticles[i]['title'];
+                    arr.push(listofarticles[i]['text']);
+                    urls.push(listofarticles[i]['url']);
+                    disp[i].style.display = 'block';
+                }
+                $("#articleHeading").css("display", "block");
+                some = [];
+                times = [];
+                for(var i=0;i<retval.length;i++) {
+                    some.push(retval[i][3]);
+                    times.push(retval[i][0]);
+                }
+                var config = {
+                    type: 'line',
+                    data: {
+                        labels: times,
+                        datasets: [{
+                            label: company,
+                            backgroundColor: '#4283f4',
+                            borderColor: '#4283f4',
+                            data: some,
+                            fill: false,
+                            radius: 0
+                        }]
+                    }
+                };
+                console.log(config);
+                var ctx = document.getElementById("myChart").getContext("2d");
+                window.myLine = new Chart(ctx, config);
+                $('#loading').hide();
+
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+
+    };
+
+    jQuery(document).ready(function($) {
+
+        $('#lightbox').click(function(){
+            $('#lightbox').hide(700);
+        });
+
+        $('.lightbox_trigger').click(function(e) {
+            e.preventDefault();
+            var id = $(this).attr("id");
+            id = Number(id.substring(7)) - 1;
+            var element = document.getElementById('content');
+            if ($('#lightbox').length > 0) {
+                $('#lightbox').html("<p class='close' style='margin-top: 5%;'><img src='{{ url_for('static',filename='images/close.png')}}' height='30px' width='30px' /></p>" +
+                    '<div id="content" style="margin-top: 10%;">' +
+                    '<h4 style="padding:1%">' + listofarticles[id]['title'] + '</h4>' + 
+                    '<p style="padding:5%">' + arr[id] + '<br><a href="' + urls[id] + '">Read full article</a></p>' +
+                    '</div>'
+                );
+                $('#lightbox').show('fast');
+            } else {
+                var lightbox =
+                    '<div id="lightbox"  onclick="close()">' +
+                    '<p>Click to close</p>' +
+                    '<div id="content">' +
+                    '<p>Nothing found....</p>' +
+                    '</div>' +
+                    '</div>';
+                $('body').append(lightbox);
+            }
+        });
+
+        $("html, body").scrollTop(0);
+
+
+    });
+
+    </script>
 </body>
+
 </html>

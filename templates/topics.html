@@ -5,6 +5,12 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css' />
 	<script type="text/javascript" src = "{{ url_for('static', filename = 'js/script.js') }}"></script>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<!--<link href="/static/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+	<link href="/static/css/print.css" media="print" rel="stylesheet" type="text/css" />-->
+	<!--[if IE]>
+	    <link href="/static/css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+	<![endif]-->
 </head>
 <body>
     <header class="header">
@@ -14,13 +20,22 @@
 				<a href="{{ url_for('index') }}">Home</a>
 				<a href="{{ url_for('articles') }}">Articles</a>
 				<a href="{{ url_for('topics') }}" class="selected">Topics</a>
+				<a href="{{ url_for('visuals') }}">Visuals</a>
 			</nav>
 		</div>
 	</header>
    
-      <h1>Topics</h1>
-      <a href="http://www.google.com">Topic 1</a>
-      <a href="http://www.fb.com">Topic 2</a>
+      	<h2>Topics</h2>
+	    {% for row in topicList %}
+	    <p style="color: {% if row[1] < 0.046 %}red{% else %}green{% endif %}">
+	    Here is the text from the article about {{ row[0] }}.<br/>
+	    <a href="http://www.google.com">Read more..</a><br/>
+	    </p>
+	    <br/>
+	    {% endfor %}
+		<div class="container">
+		  <p class="bouncer" contenteditable>While some see them as the crazy ones, we see genius.</p>
+		</div>
       
 </body>
 </html>

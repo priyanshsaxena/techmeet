@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>D3 Test</title>
+    <!-- load the d3.js library -->    
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+<button onclick="toggle();">Update</button>
+</body>
+<script type="text/javascript">
+    var numbers = [ 5, 4, 10, 1 ];
+    var data = [
+        { date: '2014-01-01', amount: 10 },
+        { date: '2014-02-01', amount: 20 },
+        { date: '2014-03-01', amount: 40 },
+        { date: '2014-04-01', amount: 80 }
+    ];
+
+    var days = [
+        [
+            { product: 'Hoodie',  count: 100 },
+            { product: 'Jacket',  count: 30 },
+            { product: 'Snuggie', count: 20 },
+        ],
+        [
+            { product: 'Hoodie',  count: 160 },
+            { product: 'Jacket',  count: 7 },
+            { product: 'Snuggie', count: 8 },
+        ],
+    ];
+
+    var sales = days[0];
+    
+    var y = d3.scaleLinear()
+      .domain(d3.extent(data, function(d) { return d.amount })) // $0 to $80
+      .range([200, 0]); // Seems backwards because SVG is y-down
+
+    var x = d3.scaleTime()
+        .domain([
+          new Date(Date.parse('2014-01-01')),
+          new Date(Date.parse('2014-04-01'))
+        ])
+        .range([0, 300]);
+
+    var xAxis = d3.axisBottom(x)
+      .ticks(4); // specify the number of ticks
+
+    var svg = d3.select('body')
+      .append('svg')        // create an <svg> element
+        .attr('width', 300) // set its dimentions
+        .attr('height', 150);
+
+    // svg.append('g')            // create a <g> element
+    //   .attr('class', 'x axis') // specify classes
+    //   .call(xAxis);   
+
+    var svg = d3.select('svg');
+
+    // var rects = svg.selectAll('rect')
+    //   .data(data);
+
+    var rects = svg.selectAll('rect')
+      .data(sales);
+
+    var newRects = rects.enter();
+
+    // var maxCount = d3.max(data, function(d, i) {
+    //   return d.amount;
+    // });
+    // var x = d3.scaleLinear()
+    //   .range([0, 300])
+    //   .domain([0, maxCount]);
+    // var y = d3.scaleBand()
+    //   .rangeRound([0, 75])
+    //   .domain(data.map(function(d, i) {
+    //     return d.date;
+    //   }));
+
+    // newRects.append('rect')
+    //   .attr('x', x(0))
+    //   .attr('y', function(d, i) {
+    //     return y(d.date);
+    //   })
+    //   .attr('height', y.range()[1])
+    //   .attr('width', function(d, i) {
+    //     return x(d.amount);
+    //   });
+
+    var maxCount = d3.max(sales, function(d, i) {
+      return d.count;
+    });
+    var x = d3.scaleLinear()
+      .range([0, 300])
+      .domain([0, maxCount]);
+    var y = d3.scaleBand()
+      .rangeRound([0, 75])
+      .domain(sales.map(function(d, i) {
+        return d.product;
+      }));
+
+
+    var pie = d3.pie()
+          .value(function(d) { return d.count })
+
+        var slices = pie(sales);
+
+        var arc = d3.arc()
+          .innerRadius(0)
+          .outerRadius(50);
+
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        var svg = d3.select('svg');
+        console.log(svg.length);
+        var g = svg.append('g')
+          .attr('transform', 'translate(200, 50)');
+
+        g.selectAll('path.slice')
+          .data(slices)
+            .enter()
+              .append('path')
+                .attr('class', 'slice')
+                .attr('d', arc)
+                .attr('fill', function(d) {
+                  return color(d.data.product);
+                });
+
+        svg.append('g')
+          .attr('class', 'legend')
+            .selectAll('text')
+            .data(slices)
+              .enter()
+                .append('text')
+                  .text(function(d) { return '• ' + d.data.product; })
+                  .attr('fill', function(d) { return color(d.data.product); })
+                  .attr('y', function(d, i) { return 20 * (i + 1); });
+
+    // newRects.append('rect')
+    //   .attr('x', x(0))
+    //   .attr('y', function(d, i) {
+    //     return y(d.product);
+    //   })
+    //   .attr('height', y.bandwidth())
+    //   .attr('width', function(d, i) {
+    //     return x(d.count);
+    //   });
+
+    function toggle() {
+      sales = (sales == days[0]) ? days[1] : days[0];
+      update();
+    }
+
+    function update() {
+      /*var rects = svg.selectAll('rect')
+        .data(sales, function(d, i) { return d.product });
+
+      // When we enter, we add the DOM element
+      // and set up the things that won't change
+      var enterRects = rects.enter()
+        .append('rect')
+          .attr('x', x(0))
+          .attr('y', function(d, i) {
+            return y(d.product);
+          })
+          .attr('height', y.bandwidth())
+
+      // "rects" represents the update selection, we need to
+      // manually merge it with the enter selection to update
+      // all rects at the same time
+      rects.merge(enterRects)
+        .transition() // NEW
+        .duration(1000) // Also NEW
+        .attr('width', function(d, i) {
+          return x(d.count);
+        });*/
+
+        var pie = d3.pie()
+          .value(function(d) { return d.count })
+
+        var slices = pie(sales);
+
+        var arc = d3.arc()
+          .innerRadius(0)
+          .outerRadius(50);
+
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        var svg = d3.select('svg');
+        console.log(svg.length);
+        var g = svg.append('g')
+          .attr('transform', 'translate(200, 50)');
+
+        g.selectAll('path.slice')
+          .data(slices)
+            .enter()
+              .append('path')
+                .attr('class', 'slice')
+                .attr('d', arc)
+                .attr('fill', function(d) {
+                  return color(d.data.product);
+                });
+
+        svg.append('g')
+          .attr('class', 'legend')
+            .selectAll('text')
+            .data(slices)
+              .enter()
+                .append('text')
+                  .text(function(d) { return '• ' + d.data.product; })
+                  .attr('fill', function(d) { return color(d.data.product); })
+                  .attr('y', function(d, i) { return 20 * (i + 1); });
+
+    }
+    
+</script>
+</html>

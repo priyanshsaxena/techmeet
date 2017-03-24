@@ -1,0 +1,4 @@
+newspaper doesnt install from pip on ubunto
+download newspaper tar for python2
+edit requirements.txt file - change "nltk=xxx" to "nltk"
+now install

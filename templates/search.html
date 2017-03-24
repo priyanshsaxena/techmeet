@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- start: Meta -->
+	<meta charset="utf-8">
+	<title>Main</title> 
+	<meta name="description" content="This is the main page"/>
+	<meta name="keywords" content="display,home,main,show,demo,search,companies" />
+	<meta name="author" content="Priyansh Saxena"/>
+	<!-- end: Meta -->
+	
+	<!-- start: Mobile Specific -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- end: Mobile Specific -->
+	
+	<!-- start: Facebook Open Graph -->
+	<meta property="og:title" content=""/>
+	<meta property="og:description" content=""/>
+	<meta property="og:type" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:image" content=""/>
+	<!-- end: Facebook Open Graph -->
+
+    <!-- start: CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/auto-complete.css') }}">
+
+	<!-- end: CSS -->
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js' %}"></script>
+    <![endif]-->
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/Chart.bundle.js') }}"></script>
+	<script src="https://code.jquery.com/jquery-1.6.2.min.js"></script>
+
+	<script type="text/javascript">
+		var display = 0;
+		var grant = "";
+		var arr = ["hola","bhola","jhola","dhoka"];
+		function toggleDisplay() {
+			if(!display) {
+				document.getElementById('article').style.display = "block";
+				document.getElementById('articledisplay').innerHTML = "Hide Article";
+			}
+			else {
+				document.getElementById('article').style.display = "none";
+				document.getElementById('articledisplay').innerHTML = "Show Article";
+			}
+			display = (display + 1) % 2;
+		}
+	</script>
+
+	<script>
+	jQuery(document).ready(function($) {
+	
+		$('.lightbox_trigger').click(function(e) {
+			e.preventDefault();
+			var id = $(this).attr("id");	
+			id = Number(id.substring(7)) - 1;
+			var element = document.getElementById('content');		
+			if ($('#lightbox').length > 0) {
+				$('#lightbox').html("<p class='close'><img src='{{ url_for('static',filename='images/close.png')}}' height='30px' width='30px' /></p>" +
+					'<div id="content">' +
+						'<p>' + arr[id] + '</p>' +
+					'</div>'
+	    		);
+				$('#lightbox').show('fast');
+			}
+			else { 
+				var lightbox = 
+				'<div id="lightbox">' +
+					'<p>Click to close</p>' +
+					'<div id="content">' +
+						'<p>Nothing found....</p>' +
+					'</div>' +	
+				'</div>';
+				$('body').append(lightbox);
+			}			
+		});
+		$('.close').live('click', function() {
+			$('#lightbox').hide('slow');
+		});
+
+	});
+	</script>
+
+	<script type="text/javascript">
+		function makecall() {
+			var name = $('#searchbox').val().trim();
+			$.ajax({
+				contentType: 'application/json',
+	            url: '/process',
+	            data: JSON.stringify(name),
+	            dataType: 'json',
+	            type: 'POST',
+	            success: function(response) {
+                	console.log(response.resultsArray);
+            	},
+            	error: function(error) {
+                	console.log(error);
+            	}
+	        });
+		};
+	</script>
+
+	<script>
+		var some = [];
+		var times = [];
+	</script>
+	{% for row in result %}
+		<script type="text/javascript">
+			var quote = '{{ row[3] }}';
+			var tim = '{{ row[0] }}';
+			some.push(quote);
+			times.push(tim);
+		</script>
+	{% endfor %}
+
+</head>
+<body>
+
+	<div style="height:auto;min-height:100px;">
+	    <div class="pure-form" style="border-top: 1px solid #eee;border-bottom:1px solid #eee;background:#fafafa;margin:30px 0;padding:20px 10px;text-align:center">
+	        <input id="searchbox" autofocus type="text" name="query" placeholder="Search" style="height:3em; width:100%;max-width:600px;outline:0">
+	        <br/>
+	        <input class="submitButton" id="submit" type="submit" name="search" onclick="makecall()" style="height: 2em;" value="Search">
+	    </div>
+	    <script type="text/javascript" src = "{{ url_for('static', filename = 'js/auto-complete.js') }}"></script>
+	    <script>
+	        var demo1 = new autoComplete({
+	            selector: '#searchbox',
+	            minChars: 1,
+	            source: function(term, suggest){
+	                term = term.toLowerCase();
+	                var choices = ['GE','Siemens','Reliance','Subaru','AOL','Microsoft','Hitachi','BMW','Docker','Castle','Evelyn','Ford','Indus','Jupyter','Karlsberg','Lamborghini','Maruti','Napalm','Oppo','Panasonic','Qualcomm','Taco Bell','Umber','Volkswagen','Wipro','Xiaomi','Yorks','Zen'];
+	                var suggestions = [];
+	                for (i=0;i<choices.length;i++) if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+	                suggest(suggestions);
+	            }
+	        });
+
+	    </script>
+	</div>
+	<div id="container" style="height: 400px">
+
+		<div id="graph" style="width: 65%;height: 100%;float: left;">
+			<canvas id="myChart" style="height: 100%;width: 100%;"></canvas>
+		</div>
+		<div id="articledisplay" style="width: 33%;float:right;">
+			{% for i in range(4) %}
+			  <h3 id="article{{i+1}}" class="lightbox_trigger">Heading {{i + 1}}</h3>
+			  <p id="textpart{{i+1}}" class="article-content"></p>
+			{% endfor %}
+		</div>
+		
+	</div>
+
+	<div id="lightbox"> 
+	    <p class="close"><img src="{{ url_for('static',filename='close.png')}}" height="30px" width="30px" /></p>
+	    <div id="content">
+	        <p></p>
+	    </div>
+	</div>
+
+</body>
+
+<script>
+	var config = {
+            type: 'line',
+            data: {
+                labels: times,
+                datasets: [{
+                    label: "Stock",
+                    backgroundColor: 'blue',
+                    borderColor: 'blue',
+                    data: some,
+                    fill: false,
+                    radius: 0
+                }]
+            }
+        };
+
+    window.onload = function() {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    };
+</script>
+
+</html>	
